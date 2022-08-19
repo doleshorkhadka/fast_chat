@@ -1,7 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api, use_key_in_widget_constructors, avoid_print, prefer_const_constructors
 
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:fast_chat/components/services.dart';
 import 'package:fast_chat/screens/login_screen.dart';
 import 'package:fast_chat/screens/registration_screen.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +40,6 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     controller.addListener(() {
       setState(() {});
     });
-    FirebaseService.firebaseConnect();
   }
 
   @override

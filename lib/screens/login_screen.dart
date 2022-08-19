@@ -33,11 +33,13 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Hero(
-                tag: 'logo',
-                child: SizedBox(
-                  height: 200.0,
-                  child: Image.asset('images/logo.png'),
+              Flexible(
+                child: Hero(
+                  tag: 'logo',
+                  child: SizedBox(
+                    height: 200.0,
+                    child: Image.asset('images/logo.png'),
+                  ),
                 ),
               ),
               SizedBox(
@@ -72,18 +74,26 @@ class _LoginScreenState extends State<LoginScreen> {
                 text: 'Log In',
                 color: Colors.lightBlueAccent,
                 onPress: () async {
-                  if (email != null && password != null) {
-                    setState(() {
-                      _isSpinning = true;
-                    });
-                    await _auth.signInWithEmailAndPassword(
-                      email: email.toString(),
-                      password: password.toString(),
-                    );
+                  try {
+                    if (email != null && password != null) {
+                      setState(() {
+                        _isSpinning = true;
+                      });
+                      await _auth.signInWithEmailAndPassword(
+                        email: email.toString(),
+                        password: password.toString(),
+                      );
+                      setState(() {
+                        _isSpinning = false;
+                      });
+                      Navigator.pushNamed(context, ChatScreen.id);
+                    }
+                  } catch (e) {
                     setState(() {
                       _isSpinning = false;
                     });
-                    Navigator.pushNamed(context, ChatScreen.id);
+                    print('Error logging in....');
+                    print(e);
                   }
                 },
               )

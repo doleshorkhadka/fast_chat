@@ -1,7 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api, prefer_const_constructors
-
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import '../components/component.dart';
 import '../constants.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -14,6 +15,9 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final _auth = FirebaseAuth.instance;
   User? loggedInUser;
+  String? textMessage;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  TextEditingController textEditingController = TextEditingController();
 
   getCurrentUser() {
     if (_auth.currentUser != null) {
@@ -49,6 +53,7 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            MessageStreams(firestore: _firestore, currentUser: loggedInUser!),
             Container(
               decoration: kMessageContainerDecoration,
               child: Row(
@@ -56,15 +61,20 @@ class _ChatScreenState extends State<ChatScreen> {
                 children: <Widget>[
                   Expanded(
                     child: TextField(
+                      controller: textEditingController,
                       onChanged: (value) {
-                        //Do something with the user input.
+                        textMessage = value;
                       },
                       decoration: kMessageTextFieldDecoration,
                     ),
                   ),
-                  FlatButton(
+                  TextButton(
                     onPressed: () {
-                      //Implement send functionality.
+                      _firestore.collection('messages').add({
+                        'text': textMessage,
+                        'sender': loggedInUser!.email,
+                      });
+                      textEditingController.clear();
                     },
                     child: Text(
                       'Send',
