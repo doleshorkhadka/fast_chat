@@ -27,24 +27,3 @@ class FastChat extends StatelessWidget {
     );
   }
 }
-
-            // StreamBuilder<QuerySnapshot>(
-            //     stream: _firestore.collection('messages').snapshots(),
-            //     builder: ((context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            //       if (snapshot.hasError) {
-            //         return Text('Something went wrong!');
-            //       }
-            //       if (snapshot.connectionState == ConnectionState.waiting) {
-            //         return Text('Loading..');
-            //       }
-            //       final data = snapshot.requireData;
-
-            //       return ListView.builder(
-            //           scrollDirection: Axis.vertical,
-            //           shrinkWrap: true,
-            //           itemCount: data.size,
-            //           itemBuilder: (context, index) {
-            //             return Text(
-            //                 '${data.docs[index]['text']} by ${data.docs[index]['sender']}.');
-            //           });
-            //     })),
