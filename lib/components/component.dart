@@ -21,7 +21,7 @@ class MessageStreams extends StatelessWidget {
         if (!snapshot.hasData) {
           return const CircularProgressIndicator();
         }
-        final msgLists = snapshot.requireData.docs.reversed;
+        final msgLists = snapshot.requireData.docs;
 
         List<MessageBubbles> tiles = [];
         for (var message in msgLists) {
